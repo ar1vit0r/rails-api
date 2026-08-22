@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.configure do |config|
-  config.openapi_root = Rails.root.to_s + "/swagger/v1"
+  config.openapi_root = Rails.root.to_s + "/swagger"
 
   config.openapi_specs = {
     "v1/swagger.yaml" => {
