@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: rails-api
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "./bin/rails server"
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rails-api-db
+          property: connectionString
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+
+databases:
+  - name: rails-api-db
+    plan: free
+    databaseName: rails_api_production
