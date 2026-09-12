@@ -22,7 +22,7 @@ RSpec.describe "Api::V1::Auth", type: :request do
             id: { type: :integer },
             email: { type: :string },
             role: { type: :string }
-          }}
+          } }
         }
         run_test!
       end
@@ -53,7 +53,7 @@ RSpec.describe "Api::V1::Auth", type: :request do
             id: { type: :integer },
             email: { type: :string },
             role: { type: :string }
-          }}
+          } }
         }
         run_test!
       end
@@ -69,7 +69,7 @@ RSpec.describe "Api::V1::Tasks", type: :request do
   path "/api/v1/tasks" do
     get "List tasks" do
       tags "Tasks"
-      security [Bearer: []]
+      security [ Bearer: [] ]
       parameter name: :status, in: :query, type: :string, required: false
       parameter name: :priority, in: :query, type: :integer, required: false
       parameter name: :q, in: :query, type: :string, required: false
@@ -97,7 +97,7 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
     post "Create a task" do
       tags "Tasks"
-      security [Bearer: []]
+      security [ Bearer: [] ]
       consumes "application/json"
       parameter name: :body, in: :body, schema: {
         type: :object,
@@ -126,7 +126,7 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
     get "Get a task" do
       tags "Tasks"
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       response "200", "task found" do
         schema type: :object, properties: {
@@ -149,7 +149,7 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
     put "Update a task" do
       tags "Tasks"
-      security [Bearer: []]
+      security [ Bearer: [] ]
       consumes "application/json"
       parameter name: :body, in: :body, schema: {
         type: :object,
@@ -167,7 +167,7 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
     delete "Delete a task" do
       tags "Tasks"
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       response "204", "deleted" do
         run_test!
@@ -180,7 +180,7 @@ RSpec.describe "Api::V1::Categories", type: :request do
   path "/api/v1/categories" do
     get "List categories" do
       tags "Categories"
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       response "200", "categories listed" do
         schema type: :array, items: {

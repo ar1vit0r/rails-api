@@ -7,6 +7,39 @@ on:
     branches: [main]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Run rubocop
+        run: bundle exec rubocop
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Scan for security vulnerabilities
+        run: bundle exec brakeman -q --no-pager
+
+      - name: Audit dependencies for known CVEs
+        run: bundle exec bundler-audit check --update
+
   test:
     runs-on: ubuntu-latest
 
