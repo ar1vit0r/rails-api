@@ -35,3 +35,6 @@
 /.claude/
 /CLAUDE.md
 
+# Ignore internal roadmap (not customer-facing).
+/ROADMAP.md
+
