@@ -16,6 +16,8 @@ RSpec.describe "Api::V1::Auth", type: :request do
       }
 
       response "201", "registered" do
+        let(:body) { { email: "swagger-register@example.com", password: "password123", password_confirmation: "password123" } }
+
         schema type: :object, properties: {
           token: { type: :string },
           user: { type: :object, properties: {
@@ -28,6 +30,8 @@ RSpec.describe "Api::V1::Auth", type: :request do
       end
 
       response "422", "invalid" do
+        let(:body) { { email: "", password: "", password_confirmation: "" } }
+
         run_test!
       end
     end
@@ -46,7 +50,11 @@ RSpec.describe "Api::V1::Auth", type: :request do
         required: %w[email password]
       }
 
+      let(:user) { create(:user, password: "password123") }
+
       response "200", "logged in" do
+        let(:body) { { email: user.email, password: "password123" } }
+
         schema type: :object, properties: {
           token: { type: :string },
           user: { type: :object, properties: {
@@ -59,6 +67,8 @@ RSpec.describe "Api::V1::Auth", type: :request do
       end
 
       response "401", "unauthorized" do
+        let(:body) { { email: user.email, password: "wrongpassword" } }
+
         run_test!
       end
     end
@@ -67,6 +77,10 @@ end
 
 RSpec.describe "Api::V1::Tasks", type: :request do
   path "/api/v1/tasks" do
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+    let(:Authorization) { "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
+
     get "List tasks" do
       tags "Tasks"
       security [ Bearer: [] ]
@@ -75,6 +89,8 @@ RSpec.describe "Api::V1::Tasks", type: :request do
       parameter name: :q, in: :query, type: :string, required: false
 
       response "200", "tasks listed" do
+        let!(:task) { create(:task, user: user, category: category) }
+
         schema type: :array, items: {
           type: :object, properties: {
             id: { type: :integer },
@@ -91,6 +107,8 @@ RSpec.describe "Api::V1::Tasks", type: :request do
       end
 
       response "401", "unauthorized" do
+        let(:Authorization) { "Bearer invalid" }
+
         run_test!
       end
     end
@@ -112,10 +130,14 @@ RSpec.describe "Api::V1::Tasks", type: :request do
       }
 
       response "201", "created" do
+        let(:body) { { title: "New task", status: "todo", priority: 1, category_id: category.id } }
+
         run_test!
       end
 
       response "422", "invalid" do
+        let(:body) { { title: "", status: "", priority: nil, category_id: category.id } }
+
         run_test!
       end
     end
@@ -123,6 +145,12 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
   path "/api/v1/tasks/{id}" do
     parameter name: :id, in: :path, type: :integer, required: true
+
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+    let(:Authorization) { "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
+    let!(:task) { create(:task, user: user, category: category) }
+    let(:id) { task.id }
 
     get "Get a task" do
       tags "Tasks"
@@ -143,6 +171,8 @@ RSpec.describe "Api::V1::Tasks", type: :request do
       end
 
       response "404", "not found" do
+        let(:id) { 0 }
+
         run_test!
       end
     end
@@ -161,6 +191,8 @@ RSpec.describe "Api::V1::Tasks", type: :request do
       }
 
       response "200", "updated" do
+        let(:body) { { title: "Updated title" } }
+
         run_test!
       end
     end
@@ -178,11 +210,16 @@ end
 
 RSpec.describe "Api::V1::Categories", type: :request do
   path "/api/v1/categories" do
+    let(:user) { create(:user) }
+    let(:Authorization) { "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
+
     get "List categories" do
       tags "Categories"
       security [ Bearer: [] ]
 
       response "200", "categories listed" do
+        let!(:category) { create(:category) }
+
         schema type: :array, items: {
           type: :object, properties: {
             id: { type: :integer },
