@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Rack</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%233E4C55'/%3E%3Crect x='6' y='8' width='20' height='7' fill='%23F4F6F3'/%3E%3Crect x='6' y='17' width='20' height='7' fill='%23F0B429'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<main id="login" class="login" hidden>
+  <div class="login-rack">
+    <form id="login-form" class="paper login-strip">
+      <h1 class="brand">Rack</h1>
+      <p class="lede">Sign in to see your task board.</p>
+      <label>Email
+        <input name="email" type="email" autocomplete="username" required>
+      </label>
+      <label>Password
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p id="login-error" class="error" role="alert"></p>
+      <div class="row">
+        <button class="btn primary" type="submit">Sign in</button>
+        <button class="btn" type="button" id="register">Create account</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<div id="board" hidden>
+  <header class="topbar wrap">
+    <span class="brand">Rack</span>
+    <input id="search" type="search" placeholder="Search tasks" aria-label="Search tasks">
+    <select id="filter-cat" aria-label="Filter by category">
+      <option value="">All categories</option>
+    </select>
+    <span id="who" class="who"></span>
+    <button id="signout" class="btn" type="button">Sign out</button>
+  </header>
+
+  <p id="notice" class="notice wrap" role="status"></p>
+
+  <nav class="tabs wrap" aria-label="Bays">
+    <button type="button" data-tab="todo">To do <span class="count" data-count="todo">0</span></button>
+    <button type="button" data-tab="in_progress">In progress <span class="count" data-count="in_progress">0</span></button>
+    <button type="button" data-tab="done">Done <span class="count" data-count="done">0</span></button>
+  </nav>
+
+  <div class="bays wrap">
+    <section id="bay-todo" class="bay" aria-labelledby="h-todo">
+      <h2 id="h-todo">To do <span class="count" data-count="todo">0</span></h2>
+      <form id="new-form" class="new">
+        <input name="title" type="text" placeholder="New task" aria-label="Task title" maxlength="200" required>
+        <select name="category" aria-label="Category"></select>
+        <select name="priority" aria-label="Priority"></select>
+        <button class="btn" type="submit">Add task</button>
+      </form>
+      <p id="new-hint" class="hint"></p>
+      <ul id="list-todo" class="strips"></ul>
+    </section>
+
+    <section id="bay-in_progress" class="bay" aria-labelledby="h-in_progress">
+      <h2 id="h-in_progress">In progress <span class="count" data-count="in_progress">0</span></h2>
+      <ul id="list-in_progress" class="strips"></ul>
+    </section>
+
+    <section id="bay-done" class="bay" aria-labelledby="h-done">
+      <h2 id="h-done">Done <span class="count" data-count="done">0</span></h2>
+      <ul id="list-done" class="strips"></ul>
+    </section>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
