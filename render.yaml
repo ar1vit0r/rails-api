@@ -17,6 +17,11 @@ services:
       - key: RAILS_SERVE_STATIC_FILES
         value: "true"
 
+  - type: web
+    name: rails-api-frontend
+    runtime: static
+    staticPublishPath: ./frontend
+
 databases:
   - name: rails-api-db
     plan: free
