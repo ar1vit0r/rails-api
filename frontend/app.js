@@ -1,9 +1,10 @@
 "use strict";
 
-// API origin: localhost when opened locally, production when hosted. Override with ?api=<url>
+// API origin: production only on the Render-hosted site, localhost everywhere else (file://, LAN IP, [::1]).
+// Override with ?api=<url>
 // ponytail: no config file, add one if more settings appear.
-const LOCAL = ["localhost", "127.0.0.1", ""].includes(location.hostname);
-const API = new URLSearchParams(location.search).get("api") ?? (LOCAL ? "http://localhost:3000" : "https://rails-api-zm3n.onrender.com");
+const HOSTED = location.hostname.endsWith(".onrender.com");
+const API = new URLSearchParams(location.search).get("api") ?? (HOSTED ? "https://rails-api-zm3n.onrender.com" : "http://localhost:3000");
 const TOKEN_KEY = "rack.token";
 
 const STATUSES = [
