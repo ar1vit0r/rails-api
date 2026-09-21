@@ -5,32 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>Rack</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%233E4C55'/%3E%3Crect x='6' y='8' width='20' height='7' fill='%23F4F6F3'/%3E%3Crect x='6' y='17' width='20' height='7' fill='%23F0B429'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23EEF2EF'/%3E%3Crect x='11' width='12' height='32' fill='%230B6B4F'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&family=Young+Serif&display=swap">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
 <main id="login" class="login" hidden>
-  <div class="login-rack">
-    <form id="login-form" class="paper login-strip">
-      <h1 class="brand">Rack</h1>
-      <p class="lede">Sign in to see your task board.</p>
-      <label>Email
-        <input name="email" type="email" autocomplete="username" required>
-      </label>
-      <label>Password
-        <input name="password" type="password" autocomplete="current-password" required>
-      </label>
-      <p id="login-error" class="error" role="alert"></p>
-      <div class="row">
-        <button class="btn primary" type="submit">Sign in</button>
-        <button class="btn" type="button" id="register">Create account</button>
-      </div>
-    </form>
+  <div class="login-slab">
+    <h1 class="brand">Rack</h1>
+    <p class="lede">A task board for what's waiting, what you're on, and what's done.</p>
   </div>
+  <form id="login-form" class="login-form">
+    <h2>Sign in</h2>
+    <label>Email
+      <input name="email" type="email" autocomplete="username" required>
+    </label>
+    <label>Password
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <p id="login-error" class="error" role="alert"></p>
+    <div class="row">
+      <button class="btn primary" type="submit">Sign in</button>
+      <button class="btn" type="button" id="register">Create account</button>
+    </div>
+  </form>
 </main>
 
 <div id="board" hidden>

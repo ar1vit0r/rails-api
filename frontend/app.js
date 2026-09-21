@@ -18,11 +18,11 @@ const MOVES = {
 };
 const statusIndex = (key) => STATUSES.findIndex((s) => s.key === key);
 
-const state = { token: null, user: null, tasks: [], categories: [], q: "", cat: "", tab: "todo", arrived: null };
+const state = { token: null, user: null, tasks: [], categories: [], q: "", cat: "", tab: "in_progress", arrived: null };
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
-const isMobile = () => matchMedia("(max-width: 759px)").matches;
+const isMobile = () => matchMedia("(max-width: 959px)").matches;
 
 const storage = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
@@ -145,7 +145,7 @@ function render() {
 
 function strip(t) {
   const arrived = state.arrived?.id === t.id;
-  const li = h("li", { className: `paper strip${arrived ? " arrived" : ""}` });
+  const li = h("li", { className: `strip${arrived ? " arrived" : ""}` });
   li.dataset.status = t.status;
   li.dataset.priority = t.priority;
   if (arrived) li.style.setProperty("--from", `${-state.arrived.dir * 40}px`);
@@ -169,6 +169,7 @@ function strip(t) {
   };
 
   li.append(
+    ...(t.status === "done" ? [h("span", { className: "check", "aria-hidden": "true" })] : []),
     h("h3", { className: "title", textContent: t.title }),
     bars,
     h("p", { className: "meta", textContent: `${t.category}, ${PRIORITIES[t.priority]} priority` }),
