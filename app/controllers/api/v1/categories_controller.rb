@@ -8,7 +8,8 @@ module Api
 
       def show
         category = Category.find(params[:id])
-        render json: { id: category.id, name: category.name, tasks: category.tasks.map { |t| task_json(t) } }
+        tasks = @current_user.tasks.where(category: category)
+        render json: { id: category.id, name: category.name, tasks: tasks.map { |t| task_json(t) } }
       end
 
       private
@@ -18,8 +19,7 @@ module Api
           id: task.id,
           title: task.title,
           status: task.status,
-          priority: task.priority,
-          user: task.user.email
+          priority: task.priority
         }
       end
     end
