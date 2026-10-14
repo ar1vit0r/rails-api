@@ -28,4 +28,18 @@ RSpec.describe "Api::V1::Categories", type: :request do
       expect(response.body).not_to include("private-title")
     end
   end
+
+  describe "GET /api/v1/categories" do
+    it "counts only the current user's tasks per category" do
+      create_list(:task, 2, user: user, category: category)
+      create_list(:task, 3, user: other_user, category: category)
+      empty = create(:category)
+
+      get "/api/v1/categories", headers: headers
+
+      counts = JSON.parse(response.body).to_h { |c| [ c["id"], c["tasks_count"] ] }
+      expect(counts[category.id]).to eq(2)
+      expect(counts[empty.id]).to eq(0)
+    end
+  end
 end

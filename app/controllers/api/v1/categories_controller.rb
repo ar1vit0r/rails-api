@@ -2,8 +2,8 @@ module Api
   module V1
     class CategoriesController < ApplicationController
       def index
-        categories = Category.all
-        render json: categories.map { |c| { id: c.id, name: c.name, tasks_count: c.tasks.count } }
+        counts = @current_user.tasks.group(:category_id).count
+        render json: Category.all.map { |c| { id: c.id, name: c.name, tasks_count: counts.fetch(c.id, 0) } }
       end
 
       def show
